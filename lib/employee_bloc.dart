@@ -36,6 +36,44 @@ class EmployeeBloc {
   Stream<List<Employee>> get employeeListStream =>
       employeeListStreamController.stream;
 
+  StreamSink<List<Employee>> get employeeListSink =>
+      employeeListStreamController.sink;
+
+  StreamSink<Employee> get employeeSalaryIncrement =>
+      employeeSalaryIncrementStremController.sink;
+  StreamSink<Employee> get employeeSalaryDecrement =>
+      employeeSalaryDecrementStremController.sink;
+
   //TODO: Step-5
-  // StreamSink<List<Employee>> get employeeListSink =>
+  EmployeeBloc() {
+    employeeListStreamController.add(employeeList);
+
+    employeeSalaryIncrementStremController.stream.listen(_incrementSalary);
+    employeeSalaryDecrementStremController.stream.listen(_decrementSalary);
+  }
+
+  //TODO: Step-6 Core fuctions
+
+  _incrementSalary(Employee employee) {
+    double salary = employee.salary;
+    double incrementedSalary = salary * 20 / 100;
+
+    employeeList[employee.id - 1].salary = salary + incrementedSalary;
+    employeeListSink.add(employeeList);
+  }
+
+  _decrementSalary(Employee employee) {
+    double salary = employee.salary;
+    double decrementSalary = salary * 20 / 100;
+
+    employeeList[employee.id - 1].salary = salary - decrementSalary;
+    employeeListSink.add(employeeList);
+  }
+
+  //TODO: Step-7 dispose
+  void dispose() {
+    employeeListStreamController.close();
+    employeeSalaryIncrementStremController.close();
+    employeeSalaryDecrementStremController.close();
+  }
 }
