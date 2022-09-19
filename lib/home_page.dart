@@ -65,14 +65,20 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.all(10),
                         child: IconButton(
                           icon: Icon(Icons.thumb_up, color: Colors.green[400]),
-                          onPressed: () {},
+                          onPressed: () {
+                            _employeeBloc.employeeSalaryIncrementStremController
+                                .add(snapshot.data![index]);
+                          },
                         ),
                       ),
                       Container(
                         padding: const EdgeInsets.all(10),
                         child: IconButton(
                           icon: Icon(Icons.thumb_down, color: Colors.red[400]),
-                          onPressed: () {},
+                          onPressed: () {
+                            _employeeBloc.employeeSalaryDecrementStremController
+                                .add(snapshot.data![index]);
+                          },
                         ),
                       ),
                     ],
